@@ -1,0 +1,1085 @@
+$myblack: rgb(30, 33, 36);
+$mywhite: rgb(247, 248, 249);
+$myblue: rgb(22,102,219);
+
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+.modal-body{
+  height: 600px;
+  overflow-y: auto;
+}
+
+.app{
+
+  // BLOG
+  .blog{
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    .container {
+        width: 100%;
+        
+        .link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        //LOGIN REGISTER
+        .auth{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: paleturquoise;
+
+            h1{
+                font-size: 20px;
+                color: $myblue;
+                margin-bottom: 20px;
+            }
+
+            form{
+                display: flex;
+                flex-direction: column; // 以列方向进行布局
+                padding: 50px;
+                background-color: white;
+                width: 300px;
+                gap: 20px; //当前form内的元素之间的间隔
+
+                input{
+                    padding: 10px;
+                    border: none;
+                    border-bottom: 1px solid gray;
+                }
+
+                button{
+                    padding: 10px; //本来很小，这么搞自动把button变大了
+                    border: none;
+                    background-color: $myblue;
+                    cursor: pointer; //这样cursor放在上面会显示手指
+                    color: white;
+                }
+                p{
+                    font-size: 12px;
+                    color:red;
+                    text-align: center;
+                }
+                span{
+                    font-size: 12px;
+                    text-align: center;
+                }
+            }
+        }
+
+        // NAVBAR
+        .navbar{
+            .container {
+                padding: 10px 0px;
+                display: flex;
+                align-items: center; // 元素垂直方向居中
+                justify-content: space-between; // 元素水平方向用space间隔
+                .logo{
+                    img{
+                        width: 80px;
+                    }
+                }
+                .links{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                h6{
+                    font-size: 16px;
+                    font-weight: 300;
+                    padding: 0px 5px;   
+                    &:hover { 
+                        color: $myblue;
+                    }
+                }
+
+                span{
+                    cursor: pointer;
+                }
+
+                .write{
+                    background-color: $myblue;
+                    color: white;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 300;
+                    border: 1px solid white; 
+                    // 太机智了，在这里提前加一个白色的border，这样悬浮时的border就不会使其他元素移位了
+                    &:hover { 
+                        color: $myblue;
+                        background-color: white;
+                        border: 1px solid $myblue;
+                    }
+
+                }
+            }
+        }
+
+        // FOOTER
+        footer{
+            margin-top: 100px;
+            padding: 20px;
+            background-color: paleturquoise;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            img{
+                height: 50px;
+            }
+        }
+
+        // HOME
+        .home{
+            .posts{
+                margin-top: 50px;
+                display: flex;
+                flex-direction: column;
+                gap: 150px;
+
+                .post{
+                    display: flex;
+                    gap: 100px;
+
+                    &:nth-child(2n+1) {
+                        flex-direction: row-reverse;
+                    }
+
+                    .img{
+                        flex: 2;  // 占2份
+                        position: relative;
+
+                        &::after{  // how to use after
+                            content: "";
+                            width: 100%;
+                            height: 100%;
+                            background-color: paleturquoise;
+                            position: absolute;
+                            top: 20px;
+                            left: -20px;
+                            z-index: -1;
+                        }
+
+                        img{
+                            width: 100%; // 这个100%指的就是.img 2份的100%
+                            max-height: 400px;
+                            object-fit: cover; // 这样能保证图片裁剪后不失真
+                            object-position: top;
+                        }
+                    }
+
+                    .content{
+                        flex: 3;  // 占3份
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+
+                        h1{
+                            font-size: 48px;
+                        }
+
+                        p{
+                            font-size: 18px;
+                            display: -webkit-box;
+                            max-width: 100%;
+                            -webkit-line-clamp: 8;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                        }
+
+                        button{
+                            width: max-content;
+                            padding: 10px 20px;
+                            border: none;
+                            cursor: pointer;
+                            background-color: white;
+                            border: 1px solid $myblue;
+                            color: $myblue;
+
+                            &:hover{
+                                border: 1px solid white;
+                                background-color: $myblue;
+                                color: white;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        // SINGLE
+        .single {
+            display: flex;
+            gap: 50px;
+
+            .content{
+             flex: 5; 
+             display: flex;
+             flex-direction: column;  
+             gap: 30px;
+
+             img{
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+             }
+
+             .user{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 14px;
+                img{
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                span{
+                    font-weight: bold;
+                }
+
+                .edit {
+                    display: flex;
+                    gap: 5px;
+
+                    img{
+                        width: 20px;
+                        height: 20px;
+                        cursor: pointer;
+                    }
+                }
+
+                h1{
+                    font-size: 42px;
+                    color:#333
+                }
+
+                p{
+                    text-align: justify;
+                    line-height: 30px;  // 行间距
+                }
+             }
+            }
+
+            .menu {
+                flex: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+
+                h1{
+                    font-size: 20px;
+                    color: #555;
+                }
+
+                .post{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    img{
+                        width: 100%;
+                        height: 200px;
+                        object-fit: cover;
+                    }
+
+                    h2{
+                        color: #555;
+                    }
+
+                    button{
+                        width: max-content;
+                        padding: 7.5px 15px;
+                        border: none;
+                        cursor: pointer;
+                        background-color: white;
+                        border: 1px solid $myblue;
+                        color: $myblue;
+
+                        &:hover{
+                            border: 1px solid white;
+                            background-color: $myblue;
+                            color: black;
+                        }
+                    }
+                }
+            }
+        }
+
+        // WRITE
+        .add {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+
+            .content{
+                flex: 5;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                input{
+                    padding: 10px;
+                    border: 1px solid lightgray;
+                }
+
+                .editorContainer{
+                    height: 300px;
+                    overflow: scroll;
+                    border: 1px solid lightgray;
+                    
+                    .editor{
+                        height: 100%;
+                        border: none;
+
+                    }
+                }
+            }
+
+            .menu{
+                flex: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .item{
+                    border: 1px solid lightgray;
+                    padding: 10px;
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    font-size: 12px;
+                    color: #555;
+
+                    h1{
+                        font-size: 20px;
+                    }
+
+                    .file{
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+                    .buttons{
+                        display: flex;
+                        justify-content: space-between;
+
+                        :first-child{
+                            cursor: pointer;
+                            color: $myblue;
+                            background-color: white;
+                            border: 1px solid $myblue;
+                            padding: 3px 5px;
+                        }
+
+                        :last-child{
+                            cursor: pointer;
+                            color: white;
+                            background-color: $myblue;
+                            border: 1px solid $myblue;
+                            padding: 3px 5px;
+                        }
+                    }
+
+                    .cat{
+                        display: flex;
+                        align-items: center;
+                        gap: 2px;
+                        color: $myblue;
+                    }
+                }
+            }
+        }
+    }
+}
+
+  // MAIN TITLE
+  .title-with-icon {
+    display: flex;
+  }
+
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .main-content {
+    height:100%;
+    padding-top: 100px;
+
+    // HOME  
+    .block-1-light {
+      background: linear-gradient(70deg, $mywhite 50%, rgba(255, 255, 255, 0) 75%),
+      url('../images/gallery-block-background.png') right top no-repeat;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 350px;
+      border-radius: 0.5rem;
+      margin-top: 25px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+      }
+
+
+      .block-layout-1 {
+        height: 100%;
+        padding-left:5%;
+        padding-top: 5%;
+        padding-bottom: 6%;
+        width: 50%;
+
+        .block-title-1-light {
+          font-size: 50px;
+          font-weight: bolder;
+          color: $myblack;
+        }
+  
+        .block-sentence-1-light {
+          font-size: 25px;
+          font-weight: 500;
+        }
+      }
+    }
+    .block-1-light-still {
+      background: linear-gradient(70deg, $mywhite 50%, rgba(255, 255, 255, 0) 75%),
+      url('../images/gallery-block-background.png') right top no-repeat;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 350px;
+      border-radius: 0.5rem;
+      margin-top: 25px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      .block-layout-1 {
+        height: 100%;
+        padding-left:5%;
+        padding-top: 5%;
+        padding-bottom: 6%;
+        width: 50%;
+
+        .block-title-1-light-still {
+          font-size: 50px;
+          font-weight: bolder;
+          color: $myblack;
+        }
+  
+        .block-sentence-1-light-still {
+          font-size: 25px;
+          font-weight: 500;
+        }
+      }
+    }
+    .block-2-dark {
+      background: linear-gradient(70deg, $myblack 60%, rgba(0, 0, 0, 0) 85%),
+      url('../images/aboutme-block-background.png') right top no-repeat;
+      background-size: cover;
+      background-position: right;
+      width: 100%;
+      height: 240px;
+      border-radius: 0.5rem;
+      margin-top: 25px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .block-layout-2 {
+        height: 100%;
+        padding-left: 10%;
+        padding-top: 5%;
+        width: 70%;
+
+        .block-title-2-dark {
+          font-size: 35px;
+          font-weight: 500;
+          color: white;
+        }
+  
+        .block-sentence-2-dark {
+          overflow-wrap: break-word;
+          font-size: 17px;
+          font-weight: 400;
+          color: white;
+        }
+      }
+
+    }
+    .block-2-light {
+      background: linear-gradient(70deg, $mywhite 55%, rgba(255, 255, 255, 0) 75%),
+      url('../images/blog-block-background.png') right top no-repeat;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 240px;
+      border-radius: 0.5rem;
+      margin-top: 25px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .block-layout-2 {
+        height: 100%;
+        padding-left: 10%;
+        padding-top: 5%;
+        width: 60%;
+
+        .block-title-2-light {
+          font-size: 35px;
+          font-weight: 500;
+          color: $myblack;
+        }
+  
+        .block-sentence-2-light {
+          overflow-wrap: break-word;
+          font-size: 17px;
+          font-weight: 400;
+          color: $myblack;
+        }
+      }
+    }
+
+    // SINGLE ARTIST
+    .block-0-light {
+      background-color:$mywhite;
+      width: 100%;
+      height: 500px;
+      border-radius: 0.5rem;
+      margin-top: 25px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      .block-layout-0 {
+        height: 100%;
+        display: flex;
+
+        .info-area {
+          flex: 6;
+          margin-top: 4.5%;
+          margin-bottom: 4.5%;
+          margin-left: 6.5%;
+          margin-right: 6.5%;
+
+          h1 {
+            font-size: 50px;
+            font-weight: bolder;
+            color: $myblack;
+          }
+  
+          p {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0px;
+          }   
+        }
+
+        img {
+          height: 100%;
+          width: 400px;
+          object-fit: cover;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+
+    // TOOLBAR
+    .toolbar {
+      display: flex;
+      justify-content: center;
+      background-color: $mywhite;
+      height: 60px;
+      margin-top: 25px;
+      border-radius: 0.5rem;
+      padding-left: 5%;
+      padding-right: 5%;
+
+      .toolbar-button {
+        height: 40px;
+        margin-top: 10px;
+        margin-left: 20px;        
+      }
+
+      .toolbar-searchbar {
+        display: flex;
+        height: 40px;
+        width: 640px;
+        margin-top: 10px;
+        margin-left: 20px;
+
+        button {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .toolbar-artwork { 
+      display: flex;
+      margin-left: 0;
+      margin-right: auto;
+
+      .toolbar-button {
+        height: 40px;
+        margin-top: 20px;
+        margin-right: 10px;        
+      }
+    }
+  
+    // ABOUTME
+    .resume {
+      height: auto;
+      background-color: $mywhite;
+      padding: 40px 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+
+
+      .info {
+        display: flex;
+        padding: 0px 25px;
+
+        img {
+          height: 250px;
+          width: 250px;
+          object-fit: cover;
+          // background-color: $myblack;
+          border-radius: 0.5rem;
+          
+        }
+
+        .title {
+          margin-top: 60px;
+          margin-left: 125px;
+        }
+      }
+
+      .divider {
+        margin-top: 40px;
+        background-color: rgb(213, 213, 213);
+        height: 1px;
+      }
+
+      .main-content {
+        display: flex;
+        padding-top: 40px;
+        padding-left: 60px;
+
+        h4 {
+          font-weight: bold;
+        }
+
+        .left-area {
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          gap: 50px;
+          
+          .details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+          }
+
+          .skills {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+          }
+        }
+
+        .divider-vertical {
+          margin-left: 50px;
+          background-color: rgb(213, 213, 213);
+          width: 2px;
+        }
+
+        .right-area {
+          padding-left: 50px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .block {
+            padding-left: 20px;
+            padding-top: 20px;
+
+            .title {
+              font-weight: bold;
+            }
+    
+            .time {
+              color: gray;
+            }
+    
+            .content {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // CASCADE
+  .photo-area {
+    margin-top: 25px;
+    display: flex;
+    width: 88%;
+    margin-left: 6.3rem;
+
+    .two-columns {
+      width: 100%;
+      margin-left: 12px;
+      margin-right: 12px;
+
+      .photo-card {
+        align-items: center;
+        position: relative;
+        margin-bottom: 25px;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+  
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-unhovered{
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 100%;
+            max-height: 600px;
+            min-height: 240px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            object-position: top;
+          }
+        }
+
+        .photo-hovered {
+          background-color: #000000;
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 0;
+
+          h5 {
+            color: white;
+            position: absolute;
+            z-index: 2;
+          }
+
+          img {
+            width: 100%;
+            max-height: 600px;
+            min-height: 240px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            object-position: top;
+            opacity: 0.4;
+            z-index: 1;
+          }
+        }
+
+      }
+
+    }
+
+
+  }
+
+  // DIVIDER
+  .divider {
+    background-color: rgb(213, 213, 213);
+    height: 1px;
+  }
+
+  // FOOTER
+  .footer {
+    padding-top: 25px;
+
+    .footer-bar {
+      display: flex;
+      margin-top: 20px;
+      margin-bottom: 20px;
+
+      .icon-company {
+        display: flex;
+        margin-right: auto;
+        margin-left: 0;
+        color: $myblack;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .links-block {
+        display: flex;
+        margin-right: 0;
+        margin-left: auto;
+
+        a {
+          margin-left: 20px;
+          color: $myblack;
+        }
+      }
+    }
+  }
+}
+
+// LOGIN
+
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 60px;
+
+  .close-button{
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    .mb-3 {
+      width: 250px;
+    }
+
+    .login-button {
+      padding: 5px 20px; 
+    };
+
+    span {
+      cursor: pointer;
+
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    p {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
+
+
+// NEW ARTIST
+.new-artist {
+  .basic-info {
+    display: flex;
+  
+    .short-input {
+      width: 40%;
+    }
+    
+    .upload-portrait {
+      width: 190px;
+      height: 230px;
+      margin-left: 50px;
+      margin-top: 12px;
+      border-radius: 0.5rem;
+      background-color: rgb(226, 230, 234);
+      text-align: center;
+      padding-top: 60px;
+      border-style: none;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: rgb(94, 94, 100);
+      }
+  
+      p {
+        margin-top: 20px;
+        color: white;
+        font-weight: 800;
+      }
+    }
+
+    img {
+      width: 190px;
+      height: 230px;
+      object-fit: cover;
+      margin-left: 50px;
+      margin-top: 12px;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  }
+
+  .select {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .text-area{
+    height: 190px;
+    overflow-y: scroll;
+  }
+  
+}
+
+// NEW ARTWORK
+.new-artwork{
+
+  .photo-upload {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    img {
+      width: 220px;
+      height: 220px;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      object-fit: cover;
+    }
+    
+    .upload-artwork {
+      width: 220px;
+      height: 220px;
+      border-radius: 0.5rem;
+      background-color: rgb(226, 230, 234);
+      text-align: center;
+      padding-top: 60px;
+      border-style: none;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: rgb(94, 94, 100);
+      }
+      
+      p {
+        margin-top: 20px;
+        color: white;
+        font-weight: 800;
+      }
+    } 
+  }
+
+
+  .select {
+    margin-top: 7px;
+    margin-bottom: 15px;
+  }
+  
+  .text-area{
+    height: 190px;
+    overflow-y: scroll;
+  }
+  
+}
+
+// ARTWORK
+.artwork{
+  .artwork-area {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+  
+    img {
+      border-radius: 0.5rem;
+      min-height: 400px;
+      max-height: 600px;
+      object-fit: cover;
+    }
+  }
+  
+  
+  .artwork-info {
+    height: auto;
+    width: 100%;
+    background-color: $mywhite;
+    margin-top: 25px;
+    padding-right: 5%;
+    padding-left:5%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+
+    .title {
+      text-align: center;
+    }
+
+    .content {
+      height: auto;
+      display: flex;
+      margin-top: 20px;
+
+      .basic-info {
+        width: 45%;
+      }
+
+      .vertical-divider {
+        background-color: rgb(213, 213, 213);
+        height: auto;
+        width: 1px;
+      }
+
+      .intro {
+        height: auto;
+        width: 55%;
+        font-size: 22px;
+        margin-left: 20px;
+      }
+
+    }
+  }
+}
