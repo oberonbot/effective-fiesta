@@ -59,4 +59,9 @@ app.get("/api/upload/gallery/null", function (req, res) {});
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/blog", blogRoutes);
 
-app.listen(8800, () => console.log("Connected"));
+// start server
+const port =
+  process.env.NODE_ENV === "production" ? process.env.PORT || 80 : 4000;
+const server = app.listen(port, function () {
+  console.log("Server listening on port " + port);
+});
