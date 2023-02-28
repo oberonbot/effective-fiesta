@@ -27,7 +27,7 @@ function Artist() {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          const res = await axios.get(`/gallery/artist/${artistId}`);
+          const res = await axios.get(`/api/gallery/artist/${artistId}`);
           setName(res.data.name);
           setBirth(res.data.birth);
           setNation(res.data.nation);

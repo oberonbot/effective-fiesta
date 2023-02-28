@@ -77,7 +77,7 @@ function ToolBar(props) {
   const navigate = useNavigate();
   const handleDelete = async () => {
     try {
-      await axios.delete(`/gallery/${type}/${id}`);
+      await axios.delete(`/api/gallery/${type}/${id}`);
       navigate("/gallery");
     } catch (error) {
       console.log(error);

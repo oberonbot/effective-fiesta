@@ -36,7 +36,7 @@ const blogStorage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const blogUpload = multer({ storage: blogStorage });
 
-app.post("/gallery/upload", upload.single("file"), function (req, res) {
+app.post("/api/gallery/upload", upload.single("file"), function (req, res) {
   if (!req.session.galleryUserId) {
     return res.status(400).json("Error: Not authenticated!");
   }
@@ -45,7 +45,7 @@ app.post("/gallery/upload", upload.single("file"), function (req, res) {
   res.status(200).json(file.filename);
 });
 
-app.post("/blog/upload", blogUpload.single("file"), function (req, res) {
+app.post("/api/blog/upload", blogUpload.single("file"), function (req, res) {
   if (!req.session.blogUserId) {
     return res.status(400).json("Error: Not authenticated!");
   }
@@ -54,9 +54,9 @@ app.post("/blog/upload", blogUpload.single("file"), function (req, res) {
 });
 
 // app.get("/api/upload/blog/undefined", function (req, res) {});
-app.get("/upload/gallery/null", function (req, res) {});
+app.get("/api/upload/gallery/null", function (req, res) {});
 
-app.use("/gallery", galleryRoutes);
-app.use("/blog", blogRoutes);
+app.use("/api/gallery", galleryRoutes);
+app.use("/api/blog", blogRoutes);
 
 app.listen(8800, () => console.log("Connected"));

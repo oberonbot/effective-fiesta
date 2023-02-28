@@ -32,7 +32,7 @@ function EditArtwork() {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          const res = await axios.get(`/gallery/artwork/${artworkId}`);
+          const res = await axios.get(`/api/gallery/artwork/${artworkId}`);
           console.log(res.data);
           setTitle(res.data.title);
           setArtist(res.data.artist);
@@ -71,7 +71,7 @@ function EditArtwork() {
     try {
       const formData = new FormData();
       formData.append("file", img);
-      const res = await axios.post("/gallery/upload", formData);
+      const res = await axios.post("/api/gallery/upload", formData);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -97,7 +97,7 @@ function EditArtwork() {
         img: imgUrl,
         time: time,
       };
-      await axios.put(`/gallery/artwork/${artworkId}`, data);
+      await axios.put(`/api/gallery/artwork/${artworkId}`, data);
       handleClose();
     } catch (error) {
       console.log(error);

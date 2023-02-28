@@ -18,7 +18,7 @@ const Write = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await axios.post("/blog/upload", formData);
+      const res = await axios.post("/api/blog/upload", formData);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ const Write = () => {
     try {
       if (state != null) {
         // 说明这个是update
-        const info = await axios.put(`/blog/${state.postId}`, {
+        const info = await axios.put(`/api/blog/${state.postId}`, {
           title,
           desc: value,
           cat,

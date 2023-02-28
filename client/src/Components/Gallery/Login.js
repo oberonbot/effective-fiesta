@@ -53,7 +53,7 @@ function NewArtist(props) {
       }
     } else {
       try {
-        await axios.post("/gallery/register", inputs);
+        await axios.post("/api/gallery/register", inputs);
         setIsLogin(true);
       } catch (error) {
         setError(error.response.data);

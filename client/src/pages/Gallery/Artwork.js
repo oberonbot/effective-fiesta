@@ -38,7 +38,7 @@ function Artwork(props) {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          const res = await axios.get(`/gallery/artwork/${artworkId}`);
+          const res = await axios.get(`/api/gallery/artwork/${artworkId}`);
           setName(res.data.title);
           setArtistId(res.data.artistId);
           setArtistname(res.data.artistName);

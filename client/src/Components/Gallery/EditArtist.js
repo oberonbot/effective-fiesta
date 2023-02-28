@@ -27,7 +27,7 @@ function EditArtist(props) {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          const res = await axios.get(`/gallery/artist/${artistId}`);
+          const res = await axios.get(`/api/gallery/artist/${artistId}`);
           setName(res.data.name);
           setBirth(res.data.birth);
           setNation(res.data.nation);
@@ -63,7 +63,7 @@ function EditArtist(props) {
     try {
       const formData = new FormData();
       formData.append("file", img);
-      const res = await axios.post("/gallery/upload", formData);
+      const res = await axios.post("/api/gallery/upload", formData);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -90,7 +90,7 @@ function EditArtist(props) {
         img: imgUrl,
       };
 
-      await axios.put(`/gallery/artist/${artistId}`, data);
+      await axios.put(`/api/gallery/artist/${artistId}`, data);
       handleClose();
     } catch (error) {
       console.log(error);

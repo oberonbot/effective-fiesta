@@ -12,22 +12,22 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.post("/gallery/login", inputs);
+    const res = await axios.post("/api/gallery/login", inputs);
     setCurrentGalleryUser(res.data);
   };
 
   const logout = async (inputs) => {
-    await axios.post("/gallery/logout");
+    await axios.post("/api/gallery/logout");
     setCurrentGalleryUser(null);
   };
 
   const blogLogin = async (inputs) => {
-    const res = await axios.post("/blog/login", inputs);
+    const res = await axios.post("/api/blog/login", inputs);
     setCurrentBlogUser(res.data);
   };
 
   const blogLogout = async (inputs) => {
-    await axios.post("/blog/logout");
+    await axios.post("/api/blog/logout");
     setCurrentBlogUser(null);
   };
 
