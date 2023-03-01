@@ -196,7 +196,7 @@ function ToolBar(props) {
       );
     } else {
       // If not logged in at all
-      <></>;
+      output = <></>;
     }
   }
   return output;
