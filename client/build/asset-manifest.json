@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f378ccfe.css",
+    "main.js": "/static/js/main.360b345a.js",
+    "static/js/787.a9120f67.chunk.js": "/static/js/787.a9120f67.chunk.js",
+    "static/media/gallery-block-background.png": "/static/media/gallery-block-background.af67915c8384ab0ce929.png",
+    "static/media/blog-block-background.png": "/static/media/blog-block-background.a0a555026b70f38af897.png",
+    "static/media/aboutme-block-background.png": "/static/media/aboutme-block-background.fbfb13096b5c2aead8c1.png",
+    "static/media/Vizcaya-Cut.jpg": "/static/media/Vizcaya-Cut.525d7414974bb8fea1be.jpg",
+    "static/media/logo.png": "/static/media/logo.2c1aa5b79d6c59163193.png",
+    "index.html": "/index.html",
+    "main.f378ccfe.css.map": "/static/css/main.f378ccfe.css.map",
+    "main.360b345a.js.map": "/static/js/main.360b345a.js.map",
+    "787.a9120f67.chunk.js.map": "/static/js/787.a9120f67.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f378ccfe.css",
+    "static/js/main.360b345a.js"
+  ]
+}
