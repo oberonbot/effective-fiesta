@@ -40,7 +40,7 @@ const Write = () => {
         });
         console.log(info);
       } else {
-        await axios.post(`/blog`, {
+        await axios.post(`/api/blog`, {
           // 这个是空白新建
           title,
           desc: value,
