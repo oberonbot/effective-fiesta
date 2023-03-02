@@ -139,6 +139,7 @@ const updatePostById = async (authId, postId, title, desc, img, cat) => {
 };
 
 export const getPosts = async (req, res) => {
+  console.log("getPosts by " + req.session.blogUserId);
   const cat = req.query.cat;
   try {
     const allPosts = await getAllPosts(cat);
@@ -149,8 +150,10 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
+  console.log("getPost by " + req.session.blogUserId);
   try {
     const post = await getPostById(req.params.id);
+    console.log("getPost finished ");
     res.status(200).json(post);
   } catch (error) {
     console.log(error);
@@ -159,7 +162,7 @@ export const getPost = async (req, res) => {
 };
 
 export const addPost = (req, res) => {
-  console.log(req.session.blogUserId);
+  console.log("addPost by " + req.session.blogUserId);
   if (!req.session.blogUserId) {
     return res.status(400).json("Not authenticated!");
   }
@@ -173,6 +176,7 @@ export const addPost = (req, res) => {
 
   try {
     createPost(title, desc, img, cat, date, blogUserId);
+    console.log("addPost finished ");
     return res.json("Post has been created.");
   } catch (error) {
     console.log(error);
@@ -181,12 +185,14 @@ export const addPost = (req, res) => {
 };
 
 export const deletePost = (req, res) => {
+  console.log("deletePost by " + req.session.blogUserId);
   if (!req.session.blogUserId) {
     return res.status(400).json("Error: Not authenticated!");
   }
   try {
     const deleteInfo = deletePostById(req.params.id, req.session.blogUserId);
     if (deleteInfo) {
+      console.log("deletePost finished ");
       return res.json("Post has been deleted!");
     }
   } catch (error) {
@@ -195,6 +201,7 @@ export const deletePost = (req, res) => {
 };
 
 export const updatePost = (req, res) => {
+  console.log("updatePost by " + req.session.blogUserId);
   if (!req.session.blogUserId) {
     return res.status(400).json("Error: Not authenticated!");
   }
@@ -206,6 +213,7 @@ export const updatePost = (req, res) => {
 
   try {
     updatePostById(req.session.blogUserId, postId, title, desc, img, cat);
+    console.log("updatePost finished ");
     return res.json("Post has been updated!");
   } catch (error) {
     return res.status(400).json(error);
