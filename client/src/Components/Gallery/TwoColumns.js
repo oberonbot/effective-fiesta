@@ -21,10 +21,7 @@ function PhotoCard(props) {
       <>
         <div className="photo-hovered" onMouseLeave={handleUnhover}>
           <h5>{props.name}</h5>
-          <img
-            src={`http://localhost/upload/gallery/${props.img}`}
-            alt=""
-          ></img>
+          <img src={`./upload/gallery/${props.img}`} alt=""></img>
         </div>
       </>
     );
@@ -32,10 +29,7 @@ function PhotoCard(props) {
     photocard = (
       <>
         <div className="photo-unhovered" onMouseEnter={handleHover}>
-          <img
-            src={`http://localhost/upload/gallery/${props.img}`}
-            alt=""
-          ></img>
+          <img src={`./upload/gallery/${props.img}`} alt=""></img>
         </div>
       </>
     );
