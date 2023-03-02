@@ -44,6 +44,7 @@ const addArtist = async (req, res) => {
 };
 
 const getAllArtists = async (req, res) => {
+  console.log("gettingAllArtists");
   const tag = req.query.tag;
   try {
     const allArtists = await getAllArtistsData(tag);
