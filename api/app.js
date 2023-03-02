@@ -17,7 +17,7 @@ app.use(
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../client/build/upload/gallery");
+    cb(null, "./upload/gallery");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const blogStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../client/build/upload/blog");
+    cb(null, "./upload/blog");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
