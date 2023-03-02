@@ -17,7 +17,7 @@ app.use(
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./upload/gallery");
+    cb(null, "/var/www/html/upload/gallery");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const blogStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./upload/blog");
+    cb(null, "/var/www/html/upload/blog");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -42,6 +42,7 @@ app.post("/api/gallery/upload", upload.single("file"), function (req, res) {
   }
 
   const file = req.file;
+  console.log("received file: " + file.filename);
   res.status(200).json(file.filename);
 });
 
@@ -50,6 +51,7 @@ app.post("/api/blog/upload", blogUpload.single("file"), function (req, res) {
     return res.status(400).json("Error: Not authenticated!");
   }
   const file = req.file;
+  console.log("received file: " + file.filename);
   res.status(200).json(file.filename);
 });
 

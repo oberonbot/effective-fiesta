@@ -9,7 +9,7 @@ import axios from "axios";
 
 function Gallery() {
   const [photos, setPhotos] = useState([]);
-  const [type, setType] = useState("artists");
+  const [type] = useState("artists");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
