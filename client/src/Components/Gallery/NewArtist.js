@@ -72,7 +72,7 @@ function NewArtist(props) {
       alert("This is an app about photos, so please upload one to continue :)");
     } else {
       const imgUrl = await upload();
-
+      console.log(imgUrl);
       try {
         const data = {
           name: name,
