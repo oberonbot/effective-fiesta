@@ -1,12 +1,5 @@
 import React from "react";
 import TwoColumns from "./TwoColumns";
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 function splitArray(arr, share) {
   const subarrays = [];
@@ -29,7 +22,6 @@ function Cascade(props) {
   if (typeof photos === "undefined") {
     return <div className="photo-area"></div>;
   }
-  photos = shuffleArray(photos);
 
   if (props.type === "artists") {
     const splittedPhotos = splitArray(photos, 6);

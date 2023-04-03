@@ -4,38 +4,47 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { PersonBoundingBox } from "react-bootstrap-icons";
 import CreateableSelect from "react-select/creatable";
+import Select from "react-select";
 import axios from "axios";
+import {
+  checkName,
+  checkNation,
+  checkBirthAndPassing,
+  checkImg,
+  checkIntro,
+} from "../../helpers";
 
 function NewArtist(props) {
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [img, setImg] = useState(null);
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
-  const [nation, setNation] = useState("");
-  const [intro, setIntro] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [artistTags, setArtistTags] = useState([]);
   const [previewSrc, setPreviewSrc] = useState(null);
+  const [artistTags, setArtistTags] = useState([]);
+  const [nationTags, setNationTags] = useState([]);
+  const [artist, setArtist] = useState({
+    name: "",
+    birth: "",
+    passing: "",
+    nation: "",
+    tags: [],
+    intro: "",
+    img: null,
+  });
 
   useEffect(() => {
-    if (!isLoading) {
-      const fetchData = async () => {
-        setIsLoading(true);
-        try {
-          const res = await axios.get(`/api/gallery/artistTags`);
-          setArtistTags(res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-  }, [artistTags, isLoading]);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/api/gallery/artistTags`);
+        setArtistTags(res.data.artistTags);
+        setNationTags(res.data.nationTags);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [artist]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setImg(selectedFile);
+    setArtist({ ...artist, img: selectedFile });
 
     const reader = new FileReader();
     reader.onload = function () {
@@ -49,16 +58,15 @@ function NewArtist(props) {
   const handleClose = () => {
     setShow(false);
   };
+
   const handleShow = () => {
     setShow(true);
   };
 
-  // const navigate = useNavigate();
-
   const upload = async () => {
     try {
       const formData = new FormData();
-      formData.append("file", img);
+      formData.append("file", artist.img);
       const res = await axios.post("/api/gallery/upload", formData);
       return res.data;
     } catch (error) {
@@ -68,27 +76,31 @@ function NewArtist(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (img === null) {
-      alert("This is an app about photos, so please upload one to continue :)");
-    } else {
+
+    try {
+      checkImg(artist.img);
+      checkName(artist.name);
+      checkNation(artist.nation);
+      checkBirthAndPassing(artist.birth, artist.passing);
+      checkIntro(artist.intro);
+
       const imgUrl = await upload();
       console.log(imgUrl);
-      try {
-        const data = {
-          name: name,
-          birth: birth,
-          nation: nation,
-          intro: intro,
-          tags: selected,
-          img: img ? imgUrl : "",
-        };
-        await axios.post("/api/gallery/artist", data);
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      }
+      const data = {
+        name: artist.name,
+        birth: artist.birth,
+        passing: artist.passing,
+        nation: artist.nation,
+        intro: artist.intro,
+        tags: artist.tags,
+        img: artist.img ? imgUrl : "",
+      };
+      console.log(artist);
+      await axios.post("/api/gallery/artist", data);
       handleClose();
       window.location.reload();
+    } catch (error) {
+      alert(error);
     }
   };
 
@@ -102,40 +114,75 @@ function NewArtist(props) {
         {props.title}
       </Button>
 
-      <Modal size="" show={show} onHide={handleClose} centered>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName="modal-90w"
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Create New Artist</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <div className="new-artist">
-              <div className="basic-info">
-                <div className="short-input">
+              <div className="top-area">
+                <div className="top-area-left">
+                  {/* ---------------------------- Artist Name ---------------------- */}
                   <Form.Group className="mb-3">
-                    <Form.Label>Artist Name</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="text"
                       autoFocus
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) =>
+                        setArtist({ ...artist, name: e.target.value })
+                      }
+                      placeholder="Artist Name"
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control
-                      name="birth"
-                      type="date"
-                      onChange={(e) => setBirth(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Nationality</Form.Label>
-                    <Form.Control
+                  {/* ----------------------------  Nationality ---------------------- */}
+                  <div className="nationality">
+                    Country / Region
+                    <Select
                       name="nation"
-                      type="text"
-                      onChange={(e) => setNation(e.target.value)}
+                      isSearchable
+                      options={nationTags}
+                      onChange={(e) => {
+                        setArtist({ ...artist, nation: e.value });
+                      }}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
                     />
-                  </Form.Group>
+                  </div>
+
+                  {/* ---------------------------- Birth Year ---------------------- */}
+                  <div className="birth-death">
+                    From
+                    <Form.Group>
+                      <Form.Control
+                        name="birth"
+                        type="text"
+                        onChange={(e) => {
+                          setArtist({ ...artist, birth: e.target.value });
+                        }}
+                        placeholder="Year"
+                      />
+                    </Form.Group>
+                    To
+                    {/* ---------------------------- Passing Year ---------------------- */}
+                    <Form.Group>
+                      <Form.Control
+                        name="passing"
+                        type="text"
+                        onChange={(e) =>
+                          setArtist({ ...artist, passing: e.target.value })
+                        }
+                        placeholder="Year"
+                      />
+                    </Form.Group>
+                  </div>
                 </div>
+                {/* ---------------------------- Photo Upload ---------------------- */}
                 <input
                   style={{ display: "none" }}
                   type="file"
@@ -154,24 +201,30 @@ function NewArtist(props) {
                   </label>
                 )}
               </div>
+
+              {/* ---------------------------- Tags ---------------------- */}
               <div>Add Tags</div>
               <div className="select">
                 <CreateableSelect
                   isMulti
                   isSearchable
                   options={artistTags}
-                  onChange={setSelected}
+                  onChange={(e) => setArtist({ ...artist, tags: e })}
                   className="basic-multi-select"
                   classNamePrefix="select"
                 />
               </div>
+              {/* ---------------------------- Introduction ---------------------- */}
               <Form.Group>
                 <Form.Label>Introduction</Form.Label>
                 <Form.Control
                   className="text-area"
                   as="textarea"
                   name="intro"
-                  onChange={(e) => setIntro(e.target.value)}
+                  onChange={(e) =>
+                    setArtist({ ...artist, intro: e.target.value })
+                  }
+                  placeholder="No more than 60 words"
                 />
               </Form.Group>
             </div>

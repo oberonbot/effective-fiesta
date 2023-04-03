@@ -12,6 +12,7 @@ import { getTagsData, updateTagsData } from "../../data/tag.js";
 const addArtist = async (req, res) => {
   const name = req.body.name;
   const birth = req.body.birth;
+  const passing = req.body.passing;
   const nation = req.body.nation;
   const intro = req.body.intro;
   const tags = req.body.tags;
@@ -29,6 +30,7 @@ const addArtist = async (req, res) => {
       req.session.galleryUserId,
       name,
       birth,
+      passing,
       nation,
       intro,
       tags,
@@ -76,8 +78,13 @@ const getArtistsNames = async (req, res) => {
 
 const getArtistTags = async (req, res) => {
   try {
-    const getTags = await getTagsData("artist");
-    res.status(200).json(getTags);
+    const getArtistTags = await getTagsData("artist");
+    const getNationTags = await getTagsData("nation");
+    const output = {
+      artistTags: getArtistTags,
+      nationTags: getNationTags,
+    };
+    res.status(200).json(output);
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -87,6 +94,7 @@ const updateArtist = async (req, res) => {
   console.log("updateArtist by " + req.session.galleryUserId);
   const name = req.body.name;
   const birth = req.body.birth;
+  const passing = req.body.passing;
   const nation = req.body.nation;
   const intro = req.body.intro;
   const tags = req.body.tags;
@@ -105,7 +113,7 @@ const updateArtist = async (req, res) => {
 
   try {
     await updateTagsData("artist", tags);
-    await updateArtistData(id, name, birth, nation, intro, tags, img);
+    await updateArtistData(id, name, birth, passing, nation, intro, tags, img);
 
     console.log("updateArtist finished");
     return res.json("Artist has been updated.");

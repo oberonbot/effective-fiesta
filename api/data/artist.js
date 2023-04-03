@@ -10,6 +10,7 @@ const addArtistData = async (
   artistPosterId,
   name,
   birth,
+  passing,
   nation,
   intro,
   tags,
@@ -28,6 +29,7 @@ const addArtistData = async (
     artistPosterId: new ObjectId(artistPosterId),
     name: name,
     birth: birth,
+    passing: passing,
     nation: nation,
     intro: intro,
     tags: processedTags,
@@ -145,6 +147,7 @@ const updateArtistData = async (
   artistId,
   name,
   birth,
+  passing,
   nation,
   intro,
   tags,
@@ -167,13 +170,14 @@ const updateArtistData = async (
     fs.unlink(targetPath, () => {});
   }
 
-  console.log(artistId);
-  console.log(getArtist.artistPosterId);
+  // console.log(artistId);
+  // console.log(getArtist.artistPosterId);
   let updatedArtist = {
     _id: new ObjectId(artistId),
     artistPosterId: new ObjectId(getArtist.artistPosterId),
     name: name,
     birth: birth,
+    passing: passing,
     nation: nation,
     intro: intro,
     tags: processedTags,

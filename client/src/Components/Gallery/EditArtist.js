@@ -4,19 +4,24 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import CreateableSelect from "react-select/creatable";
 import axios from "axios";
+import Select from "react-select";
 import { useLocation } from "react-router-dom";
 
 function EditArtist(props) {
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [img, setImg] = useState(null);
   const [imgShow, setImgShow] = useState("");
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
-  const [nation, setNation] = useState("");
-  const [intro, setIntro] = useState("");
   const [artistTags, setArtistTags] = useState([]);
+  const [nationTags, setNationTags] = useState([]);
   const [artistPosterId, setArtistPosterId] = useState("");
+  const [artist, setArtist] = useState({
+    name: "",
+    birth: "",
+    passing: "",
+    nation: "",
+    tags: [],
+    intro: "",
+    img: null,
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -24,29 +29,30 @@ function EditArtist(props) {
 
   useEffect(() => {
     if (!isLoading) {
-      const fetchData = async () => {
-        setIsLoading(true);
-        try {
-          const res = await axios.get(`/api/gallery/artist/${artistId}`);
-          setName(res.data.name);
-          setBirth(res.data.birth);
-          setNation(res.data.nation);
-          setIntro(res.data.intro);
-          setSelected(res.data.tags);
-          setImgShow(res.data.img);
-          setArtistTags(res.data.artistTags);
-          setArtistPosterId(res.data.artistPosterId);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
+      setIsLoading(true);
+      try {
+        const res = axios.get(`/api/gallery/artist/${artistId}`);
+        setArtist({ ...artist, name: res.data.name });
+        setArtist({ ...artist, birth: res.data.birth });
+        setArtist({ ...artist, passing: res.data.passing });
+        setArtist({ ...artist, nation: res.data.nation });
+        setArtist({ ...artist, intro: res.data.intro });
+        setArtist({ ...artist, tags: res.data.tags });
+        setArtist({ ...artist, img: res.data.img });
+        setArtistTags(res.data.artistTags);
+        setNationTags(res.data.nationTags);
+        setArtistPosterId(res.data.artistPosterId);
+        setImgShow(res.data.img);
+        console.log(artist);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [isLoading, artistId]);
+  }, [isLoading, artistId, artist]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setImg(selectedFile);
+    setArtist({ ...artist, img: selectedFile });
   };
 
   // window shows and closes
@@ -57,12 +63,10 @@ function EditArtist(props) {
     setShow(true);
   };
 
-  // const navigate = useNavigate();
-
   const upload = async () => {
     try {
       const formData = new FormData();
-      formData.append("file", img);
+      formData.append("file", artist.img);
       const res = await axios.post("/api/gallery/upload", formData);
       return res.data;
     } catch (error) {
@@ -73,7 +77,7 @@ function EditArtist(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let imgUrl;
-    if (img !== null) {
+    if (artist.img !== null) {
       imgUrl = await upload();
     } else {
       imgUrl = imgShow;
@@ -82,12 +86,13 @@ function EditArtist(props) {
     try {
       const data = {
         artistPosterId: artistPosterId,
-        name: name,
-        birth: birth,
-        nation: nation,
-        intro: intro,
-        tags: selected,
-        img: imgUrl,
+        name: artist.name,
+        birth: artist.birth,
+        passing: artist.passing,
+        nation: artist.nation,
+        intro: artist.intro,
+        tags: artist.tags,
+        img: artist.img ? imgUrl : "",
       };
 
       await axios.put(`/api/gallery/artist/${artistId}`, data);
@@ -116,36 +121,66 @@ function EditArtist(props) {
         <Modal.Body>
           <Form>
             <div className="new-artist">
-              <div className="basic-info">
-                <div className="short-input">
+              <div className="top-area">
+                <div className="top-area-left">
+                  {/* ---------------------------- Artist Name ---------------------- */}
                   <Form.Group className="mb-3">
-                    <Form.Label>Artist Name</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="text"
                       autoFocus
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) =>
+                        setArtist({ ...artist, name: e.target.value })
+                      }
+                      value={artist.name}
+                      placeholder="Artist Name"
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control
-                      name="birth"
-                      type="date"
-                      value={birth}
-                      onChange={(e) => setBirth(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Nationality</Form.Label>
-                    <Form.Control
+
+                  {/* ----------------------------  Nationality ---------------------- */}
+                  <div className="nationality">
+                    Country / Region
+                    <Select
                       name="nation"
-                      type="text"
-                      value={nation}
-                      onChange={(e) => setNation(e.target.value)}
+                      isSearchable
+                      options={nationTags}
+                      onChange={(e) => {
+                        setArtist({ ...artist, nation: e.value });
+                      }}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
                     />
-                  </Form.Group>
+                  </div>
+
+                  {/* ---------------------------- Birth Year ---------------------- */}
+                  <div className="birth-death">
+                    From
+                    <Form.Group>
+                      <Form.Control
+                        name="birth"
+                        type="text"
+                        onChange={(e) => {
+                          setArtist({ ...artist, birth: e.target.value });
+                        }}
+                        placeholder="Year"
+                      />
+                    </Form.Group>
+                    To
+                    {/* ---------------------------- Passing Year ---------------------- */}
+                    <Form.Group>
+                      <Form.Control
+                        name="passing"
+                        type="text"
+                        onChange={(e) =>
+                          setArtist({ ...artist, passing: e.target.value })
+                        }
+                        placeholder="Year"
+                      />
+                    </Form.Group>
+                  </div>
                 </div>
+
+                {/* ---------------------------- Photo Upload ---------------------- */}
                 <input
                   style={{ display: "none" }}
                   type="file"
@@ -157,26 +192,31 @@ function EditArtist(props) {
                   <img src={`../../upload/gallery/${imgShow}`} alt=""></img>
                 </label>
               </div>
+
+              {/* ---------------------------- Tags ---------------------- */}
               <div>Add Tags</div>
               <div className="select">
                 <CreateableSelect
                   isMulti
                   isSearchable
                   options={artistTags}
-                  value={selected}
-                  onChange={setSelected}
+                  onChange={(e) => setArtist({ ...artist, tags: e })}
                   className="basic-multi-select"
                   classNamePrefix="select"
                 />
               </div>
+
+              {/* ---------------------------- Introduction ---------------------- */}
               <Form.Group>
                 <Form.Label>Introduction</Form.Label>
                 <Form.Control
                   className="text-area"
                   as="textarea"
                   name="intro"
-                  value={intro}
-                  onChange={(e) => setIntro(e.target.value)}
+                  onChange={(e) =>
+                    setArtist({ ...artist, intro: e.target.value })
+                  }
+                  placeholder="No more than 60 words"
                 />
               </Form.Group>
             </div>

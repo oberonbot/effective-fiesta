@@ -9,12 +9,15 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 function Artist() {
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
-  const [nation, setNation] = useState("");
-  const [intro, setIntro] = useState("");
-  const [tags, setTags] = useState([]);
-  const [img, setImg] = useState(null);
+  const [artist, setArtist] = useState({
+    name: "",
+    birth: "",
+    passing: "",
+    nation: "",
+    tags: [],
+    intro: "",
+    img: null,
+  });
   const [artworks, setArtworks] = useState([]);
   const [artistPosterId, setArtistPosterId] = useState("");
 
@@ -28,12 +31,13 @@ function Artist() {
         setIsLoading(true);
         try {
           const res = await axios.get(`/api/gallery/artist/${artistId}`);
-          setName(res.data.name);
-          setBirth(res.data.birth);
-          setNation(res.data.nation);
-          setIntro(res.data.intro);
-          setTags(res.data.tags);
-          setImg(res.data.img);
+          setArtist({ ...artist, name: res.data.name });
+          setArtist({ ...artist, birth: res.data.birth });
+          setArtist({ ...artist, passing: res.data.passing });
+          setArtist({ ...artist, nation: res.data.nation });
+          setArtist({ ...artist, intro: res.data.intro });
+          setArtist({ ...artist, tags: res.data.tags });
+          setArtist({ ...artist, img: res.data.img });
           setArtworks(res.data.artworks);
           setArtistPosterId(res.data.artistPosterId);
           console.log(res.data);
@@ -43,12 +47,12 @@ function Artist() {
       };
       fetchData();
     }
-  }, [isLoading, artistId]);
+  }, [isLoading, artistId, artist]);
 
   let tagsStr = "";
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i].label;
-    if (i === tags.length - 1) {
+  for (let i = 0; i < artist.tags.length; i++) {
+    const tag = artist.tags[i].label;
+    if (i === artist.tags.length - 1) {
       tagsStr = tagsStr + tag;
       break;
     }
@@ -56,10 +60,11 @@ function Artist() {
   }
 
   const sentence = {
-    birth: birth,
-    nation: nation,
+    birth: artist.birth,
+    passing: artist.passing,
+    nation: artist.nation,
     tagsStr: tagsStr,
-    intro: intro,
+    intro: artist.intro,
   };
   return (
     <>
@@ -68,9 +73,9 @@ function Artist() {
         <div className="divider"></div>
         <Block
           size="0"
-          title={name}
+          title={artist.name}
           sentence={sentence}
-          img={img}
+          img={artist.img}
           theme="light"
         ></Block>
         <ToolBar type="artist" id={artistId} artistPosterId={artistPosterId} />

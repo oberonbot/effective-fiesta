@@ -3,6 +3,7 @@ import galleryRoutes from "./routes/gallery/galleryRoutes.js";
 import blogRoutes from "./routes/blog/blogRoutes.js";
 import session from "express-session";
 import multer from "multer";
+import { initTags } from "./data/tag.js";
 
 const app = express();
 
@@ -17,7 +18,12 @@ app.use(
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "/var/www/html/upload/gallery");
+    if (process.env.NODE_ENV === "production") {
+      cb(null, "/var/www/html/upload/gallery");
+    } else {
+      console.log("good");
+      cb(null, "../client/public/upload/gallery");
+    }
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -26,7 +32,11 @@ const storage = multer.diskStorage({
 
 const blogStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "/var/www/html/upload/blog");
+    if (process.env.NODE_ENV === "production") {
+      cb(null, "/var/www/html/upload/blog");
+    } else {
+      cb(null, "../client/public/upload/gallery");
+    }
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -60,6 +70,12 @@ app.get("/api/upload/gallery/null", function (req, res) {});
 
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/blog", blogRoutes);
+
+try {
+  initTags();
+} catch (error) {
+  console.log(error);
+}
 
 // start server
 const port =

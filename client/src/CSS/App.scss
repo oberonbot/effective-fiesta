@@ -12,7 +12,6 @@ $myblue: rgb(22,102,219);
 }
 
 .app{
-
   // BLOG
   .blog{
     margin-top: 60px;
@@ -918,20 +917,40 @@ $myblue: rgb(22,102,219);
   }
 }
 
+.modal-90w {
+  max-width: 500px !important;
+  background-color: #000000;
+}
 
 // NEW ARTIST
 .new-artist {
-  .basic-info {
+  padding: 0px 10px;
+  .top-area {
     display: flex;
   
-    .short-input {
-      width: 40%;
+    .top-area-left {
+      width: 45%;
+
+      .nationality {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      
+      .birth-death {
+        padding: 20px 0px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
     }
     
+
     .upload-portrait {
       width: 190px;
       height: 230px;
-      margin-left: 50px;
+      margin-left: 40px;
       margin-top: 12px;
       border-radius: 0.5rem;
       background-color: rgb(226, 230, 234);
